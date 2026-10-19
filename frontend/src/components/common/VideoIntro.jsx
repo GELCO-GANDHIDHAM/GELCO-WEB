@@ -1,5 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
 
+// Cloudinary CDN video URLs (optimized with auto-format and auto-quality for high performance)
+const CLOUDINARY_VIDEO_PC = 'https://res.cloudinary.com/cazqwizg/video/upload/q_auto,f_auto/v1792412834/gelco_videos/intro_pc.mp4';
+const CLOUDINARY_VIDEO_MOBILE = 'https://res.cloudinary.com/cazqwizg/video/upload/q_auto,f_auto/v1792412837/gelco_videos/intro_mobile.mp4';
+
+const LOCAL_VIDEO_PC = '/videos/pc.mp4';
+const LOCAL_VIDEO_MOBILE = '/videos/mobile.mp4';
+
 export default function VideoIntro({ onComplete }) {
   const [isFading, setIsFading] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -12,13 +19,13 @@ export default function VideoIntro({ onComplete }) {
     };
     checkMobile();
     
-    // Failsafe: If the video takes more than 8 seconds and hasn't started playing, proceed to site.
+    // Failsafe: If the video takes more than 6 seconds and hasn't started playing, proceed to site.
     const backupTimer = setTimeout(() => {
       if (!isVideoReady) {
         console.warn("Video took too long to load or codec is unsupported. Skipping.");
         handleVideoEnd();
       }
-    }, 8000); 
+    }, 6000); 
 
     window.addEventListener('resize', checkMobile);
     return () => {
@@ -50,6 +57,9 @@ export default function VideoIntro({ onComplete }) {
     };
   }, []);
 
+  const videoSrc = isMobile ? CLOUDINARY_VIDEO_MOBILE : CLOUDINARY_VIDEO_PC;
+  const fallbackSrc = isMobile ? LOCAL_VIDEO_MOBILE : LOCAL_VIDEO_PC;
+
   return (
     <div 
       className={`fixed inset-0 z-[9999] bg-white transition-opacity duration-700 ease-in-out flex items-center justify-center ${
@@ -68,15 +78,17 @@ export default function VideoIntro({ onComplete }) {
         autoPlay
         muted
         playsInline
+        preload="auto"
         onEnded={handleVideoEnd}
         onCanPlay={() => setIsVideoReady(true)}
         onError={(e) => {
           console.error("Video failed to load", e);
           handleVideoEnd();
         }}
-        key={isMobile ? 'mobile' : 'pc'} 
-        src={isMobile ? '/videos/mobile.mp4' : '/videos/pc.mp4'}
+        key={isMobile ? 'mobile' : 'pc'}
       >
+        <source src={videoSrc} type="video/mp4" />
+        <source src={fallbackSrc} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
     </div>
