@@ -1,0 +1,17 @@
+{
+  "name": "gelco-backend",
+  "version": "1.0.0",
+  "description": "GELCO PLUS ELECTRICALS — Backend API",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "seed:admin": "node src/utils/seedAdmin.js",
+    "seed:categories": "node src/utils/seedCategories.js",
+    "seed:products": "node src/utils/seedProducts.js",
+    "seed": "node src/utils/seedAdmin.js && node src/utils/seedCategories.js && node src/utils/seedProducts.js"
+  },
+  "keywords": ["gelco", "electricals", "mern", "api"],
+  "author": "GELCO PLUS ELECTRICALS",
+  "license": "ISC"
+}
