@@ -11,6 +11,23 @@
     "seed:products": "node src/utils/seedProducts.js",
     "seed": "node src/utils/seedAdmin.js && node src/utils/seedCategories.js && node src/utils/seedProducts.js"
   },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cloudinary": "^2.11.0",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.5",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.7.0",
+    "express-validator": "^7.3.2",
+    "helmet": "^8.3.0",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.10.4",
+    "morgan": "^1.12.1",
+    "multer": "^2.4.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  },
   "keywords": ["gelco", "electricals", "mern", "api"],
   "author": "GELCO PLUS ELECTRICALS",
   "license": "ISC"
