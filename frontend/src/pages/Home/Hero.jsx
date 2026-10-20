@@ -10,12 +10,12 @@ export default function Hero() {
 
       {/* Desktop / Laptop Full-Width Banner */}
       <div className="hidden lg:block relative w-full overflow-hidden bg-white border-b border-brand-gray-border">
-        {/* Full screen width image with top 7% trimmed */}
+        {/* Full screen width banner image */}
         <div className="w-full overflow-hidden">
           <img
             src="/images/hero-showcase.png"
             alt="GELCO Industrial Controls Showcase"
-            className="w-full h-auto object-cover select-none block -translate-y-[7%] -mb-[7%]"
+            className="w-full h-auto object-cover select-none block"
           />
         </div>
 
@@ -63,13 +63,13 @@ export default function Hero() {
           </h1>
         </div>
 
-        {/* Trimmed full width image for mobile */}
+        {/* Full width image for mobile */}
         <div className="w-full rounded-2xl overflow-hidden shadow-lg border border-brand-gray-border bg-white p-1.5">
           <div className="w-full overflow-hidden rounded-xl">
             <img
               src="/images/hero-showcase.png"
               alt="GELCO Industrial Controls Showcase"
-              className="w-full h-auto object-cover block select-none -translate-y-[7%] -mb-[7%]"
+              className="w-full h-auto object-cover block select-none"
             />
           </div>
         </div>
