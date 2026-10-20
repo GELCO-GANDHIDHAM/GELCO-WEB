@@ -20,12 +20,17 @@ export default function Hero() {
 
         {/* Left side overlay: Bold text only and Explore button only */}
         <div className="absolute inset-y-0 left-0 w-[47%] sm:w-[43%] xl:w-[38%] flex flex-col justify-center pl-3.5 min-[400px]:pl-5 sm:pl-10 md:pl-14 lg:pl-20 xl:pl-28 pr-2 z-10">
-          <h1 className="text-[12px] min-[370px]:text-[13px] min-[420px]:text-base sm:text-2xl md:text-3xl lg:text-4xl xl:text-[2.75rem] 2xl:text-5xl font-black text-brand-dark leading-[1.08] uppercase tracking-tight font-sans">
-            TOUGH ON <br />
-            <span className="text-brand-red">FLUCTUATIONS.</span> <br />
-            SMART ON <br />
-            <span className="text-brand-red">PROTECTION.</span>
-          </h1>
+          <div className="font-sans select-none tracking-tight">
+            <span className="block text-[13px] min-[370px]:text-[15px] min-[420px]:text-lg sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-light text-brand-dark leading-none">
+              Powerful
+            </span>
+            <span className="block text-[22px] min-[370px]:text-[26px] min-[420px]:text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.25rem] 2xl:text-8xl font-black text-brand-red leading-[0.92] drop-shadow-sm my-0.5 sm:my-1">
+              Security
+            </span>
+            <span className="block text-[11px] min-[370px]:text-[13px] min-[420px]:text-sm sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-normal text-brand-dark leading-none pl-4 min-[370px]:pl-6 sm:pl-12 md:pl-16 lg:pl-20 xl:pl-24">
+              always<span className="text-brand-red font-black">.</span>
+            </span>
+          </div>
 
           <div className="mt-1.5 min-[420px]:mt-2.5 sm:mt-4 md:mt-6 lg:mt-8">
             <Link

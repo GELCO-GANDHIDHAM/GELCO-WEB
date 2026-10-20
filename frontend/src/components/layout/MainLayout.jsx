@@ -13,7 +13,7 @@ export default function MainLayout() {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      <main className="flex-grow pt-[54px] sm:pt-[58px]">
+      <main className="flex-grow pt-[58px] sm:pt-[70px] md:pt-[76px]">
         <Outlet />
       </main>
       {!isProductsRoute && <Footer />}

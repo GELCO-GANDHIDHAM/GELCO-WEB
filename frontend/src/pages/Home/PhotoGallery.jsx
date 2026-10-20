@@ -119,18 +119,10 @@ export default function PhotoGallery() {
   if (!photos || photos.length === 0) return null;
 
   return (
-    <section className="py-8 sm:py-12 md:py-16 bg-white border-y border-brand-gray-border">
+    <section className="py-6 sm:py-10 md:py-12 bg-white border-y border-brand-gray-border">
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         
-        {/* Section Header */}
-        <div className="mb-6 sm:mb-8">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-brand-dark uppercase tracking-tight">
-            Photo Gallery
-          </h2>
-          <div className="h-1 w-16 sm:w-20 bg-brand-red mt-1" />
-        </div>
-
-        {/* --- SINGLE FRAME SLIDER --- */}
+        {/* --- PURE SLIDING PHOTO GALLERY (NO TEXT OVERLAY) --- */}
         <div 
           className="relative w-full rounded-2xl sm:rounded-3xl overflow-hidden bg-white border border-brand-gray-border shadow-lg p-2 sm:p-3 select-none"
           onMouseEnter={() => setIsPaused(true)}
@@ -156,26 +148,10 @@ export default function PhotoGallery() {
                   >
                     <img
                       src={imgUrl}
-                      alt={item.title || `Gallery Slide ${index + 1}`}
+                      alt={`Gallery Slide ${index + 1}`}
                       className="w-full h-full object-contain md:object-cover select-none pointer-events-none"
                       loading={index === 0 ? 'eager' : 'lazy'}
                     />
-
-                    {/* Gradient Overlay for Title & Category */}
-                    {(item.title || item.category) && (
-                      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent p-4 sm:p-6 md:p-8 flex flex-col justify-end pointer-events-none">
-                        {item.category && (
-                          <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest text-brand-red drop-shadow-sm mb-1 block">
-                            {item.category}
-                          </span>
-                        )}
-                        {item.title && (
-                          <h3 className="text-white font-extrabold text-sm sm:text-lg md:text-2xl drop-shadow-md leading-tight line-clamp-2 max-w-3xl">
-                            {item.title}
-                          </h3>
-                        )}
-                      </div>
-                    )}
                   </div>
                 );
               })}

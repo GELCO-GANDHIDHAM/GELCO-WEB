@@ -18,24 +18,24 @@ export default function Header() {
   }, []);
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 bg-white transition-all duration-300 border-b border-brand-gray-border/60 ${scrolled ? 'shadow-md py-1' : 'py-1.5 sm:py-2.5'}`}>
+    <header className={`fixed top-0 left-0 right-0 z-50 bg-white transition-all duration-300 border-b border-brand-gray-border/60 ${scrolled ? 'shadow-md py-1' : 'py-1 sm:py-2'}`}>
       <div className="w-full px-3 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-11 sm:h-13 gap-2 sm:gap-4">
+        <div className="flex justify-between items-center h-13 sm:h-16 md:h-17 gap-2 sm:gap-4">
           
-          {/* Logo on Extreme Left */}
-          <Link to="/" className="flex items-center flex-shrink-0 gap-1.5 sm:gap-2.5 group">
+          {/* Logo on Extreme Left (Enlarged) */}
+          <Link to="/" className="flex items-center flex-shrink-0 gap-2 sm:gap-3 group">
             <img 
               src="/flower.png" 
               alt="GELCO Logo" 
-              className="h-7 w-7 sm:h-9 sm:w-9 object-contain group-hover:scale-105 transition-transform" 
+              className="h-8 w-8 sm:h-11 sm:w-11 md:h-12 md:w-12 object-contain group-hover:scale-105 transition-transform" 
             />
             <div className="flex flex-col">
               <img 
                 src="/gelco_text.png" 
                 alt="GELCO" 
-                className="h-4 sm:h-5.5 object-contain self-start" 
+                className="h-5 sm:h-7 md:h-8 object-contain self-start" 
               />
-              <span className="block text-[0.5rem] sm:text-[0.55rem] font-black text-brand-dark uppercase tracking-widest leading-none mt-0.5">
+              <span className="block text-[0.55rem] sm:text-[0.68rem] md:text-[0.72rem] font-black text-brand-dark uppercase tracking-widest leading-none mt-0.5">
                 Plus Electricals
               </span>
             </div>
