@@ -52,25 +52,47 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Mobile & Tablet Full-Width Layout */}
-      <div className="block lg:hidden w-full px-5 py-8 sm:py-10">
-        <div className="text-left mb-6 pl-2">
-          <h1 className="text-3xl sm:text-4xl font-black text-brand-dark leading-[1.08] uppercase tracking-tight">
+      {/* Mobile & Tablet Full-Width Layout: Text INSIDE Banner */}
+      <div className="block lg:hidden relative w-full overflow-hidden bg-white border-b border-brand-gray-border min-h-[420px] sm:min-h-[480px] flex flex-col justify-center">
+        {/* Full width background banner image */}
+        <img
+          src="/images/hero-showcase.png"
+          alt="GELCO Industrial Controls Showcase"
+          className="absolute inset-0 w-full h-full object-cover object-[75%_center] select-none"
+        />
+
+        {/* Soft gradient backing so text and buttons are ultra-readable */}
+        <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/85 to-white/20 sm:to-transparent pointer-events-none z-10"></div>
+
+        {/* Text & Action Buttons INSIDE the Banner */}
+        <div className="relative z-20 px-6 py-10 sm:px-10 sm:py-12 max-w-[85%] sm:max-w-md">
+          <h1 className="text-2xl sm:text-3xl font-black text-brand-dark leading-[1.1] uppercase tracking-tight font-sans">
             TOUGH ON <br />
             <span className="text-brand-red">FLUCTUATIONS.</span> <br />
             SMART ON <br />
             <span className="text-brand-red">PROTECTION.</span>
           </h1>
-        </div>
 
-        {/* Full width image for mobile */}
-        <div className="w-full rounded-2xl overflow-hidden shadow-lg border border-brand-gray-border bg-white p-1.5">
-          <div className="w-full overflow-hidden rounded-xl">
-            <img
-              src="/images/hero-showcase.png"
-              alt="GELCO Industrial Controls Showcase"
-              className="w-full h-auto object-cover block select-none"
-            />
+          <p className="mt-3 text-xs sm:text-sm text-brand-gray font-medium leading-relaxed">
+            Reliable Electrical Solutions for Every Requirement. Built to handle voltage drops, overloads, and phase failures — <strong className="text-brand-red font-bold">Gelco</strong> keeps your systems running safely, every day.
+          </p>
+
+          <div className="mt-5 sm:mt-6 flex flex-wrap gap-2.5 items-center">
+            <Link
+              to="/products"
+              className="inline-flex items-center justify-center px-4 py-2.5 sm:px-6 sm:py-3 bg-brand-red hover:bg-brand-red-dark text-white font-black uppercase text-xs rounded-md shadow-md transition-all active:scale-95"
+            >
+              EXPLORE PRODUCTS <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
+            </Link>
+
+            <a
+              href={`https://wa.me/${COMPANY.whatsapp}?text=${encodeURIComponent("Hello GELCO PLUS ELECTRICALS, I am interested in your products.")}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center px-3.5 py-2.5 sm:px-5 sm:py-3 bg-white/90 border-2 border-brand-red text-brand-red hover:bg-brand-red hover:text-white font-black uppercase text-xs rounded-md transition-all shadow-xs"
+            >
+              <MessageCircle className="mr-1.5 h-3.5 w-3.5" /> CHAT WITH US 👋
+            </a>
           </div>
         </div>
       </div>
