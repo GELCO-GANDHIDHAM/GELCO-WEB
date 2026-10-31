@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from 'react';
 import { 
   FileText, 
   Download,
-  Printer, 
   Eye, 
   CheckSquare, 
   Square, 
@@ -117,24 +116,6 @@ export default function CatalogMaker() {
     toast.success(`Added ${filteredProducts.length} filtered products`);
   };
 
-  // Trigger high-resolution Print-to-PDF (Native browser PDF save with 100% clickable links)
-  const handlePrintPdf = () => {
-    if (selectedProducts.length === 0) {
-      toast.error('Please select at least 1 product for the catalog');
-      return;
-    }
-
-    const previousTitle = document.title;
-    document.title = `GELCO_Product_Catalog_${selectedProducts.length}_Products`;
-    
-    // Switch to preview mode first
-    setPreviewMode(true);
-    
-    setTimeout(() => {
-      window.print();
-      document.title = previousTitle;
-    }, 400);
-  };
 
   // Direct jsPDF generation download with 100% clickable native hyperlinks
   const handleDirectDownloadPdf = async () => {
@@ -203,8 +184,7 @@ export default function CatalogMaker() {
       toast.success('Catalog PDF with clickable links downloaded successfully!', { id: 'pdf-gen' });
     } catch (err) {
       console.error('jsPDF generation failed:', err);
-      toast.error('Direct PDF export encountered an error. Opening print preview...', { id: 'pdf-gen' });
-      window.print();
+      toast.error('Failed to generate catalog PDF. Please try again.', { id: 'pdf-gen' });
     } finally {
       setIsDownloadingPdf(false);
     }
@@ -259,17 +239,6 @@ export default function CatalogMaker() {
               <Download className="w-4 h-4" />
             )}
             <span>{isDownloadingPdf ? 'Generating PDF...' : 'Download Catalog PDF'}</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={handlePrintPdf}
-            disabled={selectedProducts.length === 0}
-            className="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-neutral-900 hover:bg-black text-white rounded-xl text-xs font-black uppercase tracking-wider transition-all shadow-sm active:scale-95 disabled:opacity-50"
-            title="Open browser print dialog"
-          >
-            <Printer className="w-4 h-4" />
-            <span>Print via Browser</span>
           </button>
         </div>
       </div>
