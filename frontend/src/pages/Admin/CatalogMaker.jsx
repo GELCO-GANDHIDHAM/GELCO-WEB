@@ -484,12 +484,12 @@ export default function CatalogMaker() {
         <div className="catalog-page a4-page bg-white relative flex flex-col justify-between shadow-xl mx-auto overflow-hidden print:shadow-none">
           
           {/* Top Brand Header Bar */}
-          <div className="px-6 py-4 flex items-center justify-between border-b-2 border-brand-red">
+          <div className="px-6 py-3 flex items-center justify-between border-b-2 border-brand-red flex-shrink-0">
             <div className="flex items-center gap-2.5">
-              <img src="/flower.png" alt="GELCO" className="h-10 w-10 object-contain" />
+              <img src="/flower.png" alt="GELCO" className="h-9 w-9 object-contain" />
               <div className="flex flex-col">
-                <img src="/gelco_text.png" alt="GELCO" className="h-6 object-contain self-start" />
-                <span className="text-[10px] font-black uppercase tracking-widest text-brand-dark mt-0.5">
+                <img src="/gelco_text.png" alt="GELCO" className="h-5 object-contain self-start" />
+                <span className="text-[9px] font-black uppercase tracking-widest text-brand-dark mt-0.5">
                   Plus Electricals
                 </span>
               </div>
@@ -499,59 +499,59 @@ export default function CatalogMaker() {
               <span className="text-[9px] font-black uppercase tracking-widest text-brand-red bg-brand-red/10 px-2.5 py-0.5 rounded-full inline-block">
                 Authorized Catalog
               </span>
-              <p className="text-[11px] font-bold text-brand-dark mt-0.5">Edition 2026 – 2027</p>
+              <p className="text-[10px] font-bold text-brand-dark mt-0.5">Edition 2026 – 2027</p>
             </div>
           </div>
 
           {/* Cover Middle Hero Showcase Content */}
-          <div className="px-6 py-4 flex-1 flex flex-col justify-between overflow-hidden">
+          <div className="px-6 py-3 flex-1 flex flex-col gap-3 overflow-hidden">
             
-            {/* Tagline Typography from Reference Photo */}
-            <div className="my-1">
-              <span className="block text-lg sm:text-xl font-light text-brand-dark leading-none">
+            {/* Tagline Typography */}
+            <div>
+              <span className="block text-base font-light text-brand-dark leading-none">
                 Powerful
               </span>
-              <span className="block text-3xl sm:text-4xl lg:text-5xl font-black text-brand-red leading-[0.95] tracking-tight my-1">
+              <span className="block text-3xl font-black text-brand-red leading-tight tracking-tight">
                 Security
               </span>
-              <span className="block text-base sm:text-lg font-normal text-brand-dark leading-none pl-8 sm:pl-10">
+              <span className="block text-sm font-normal text-brand-dark leading-none pl-8">
                 always<span className="text-brand-red font-black">.</span>
               </span>
             </div>
 
-            {/* Showcase Artwork Image Banner */}
-            <div className="rounded-xl overflow-hidden border border-gray-200 shadow-sm relative bg-neutral-900 my-2">
+            {/* Showcase Artwork Image Banner — fixed height, full image visible */}
+            <div className="rounded-xl overflow-hidden border border-gray-100 shadow-sm relative bg-neutral-900 flex-shrink-0" style={{height: '200px'}}>
               <img
                 src="/images/hero-showcase.png"
                 alt="GELCO Industrial Showcase"
-                className="w-full h-auto max-h-52 object-cover block"
+                className="w-full h-full object-contain block"
               />
             </div>
 
             {/* Catalog Title Block */}
-            <div className="bg-gray-50 border-l-4 border-brand-red p-4 rounded-r-xl my-1">
-              <h2 className="text-lg sm:text-xl font-black text-brand-dark uppercase tracking-tight">
+            <div className="bg-gray-50 border-l-4 border-brand-red px-4 py-3 rounded-r-xl flex-shrink-0">
+              <h2 className="text-base font-black text-brand-dark uppercase tracking-tight">
                 Official Product Specification Catalog
               </h2>
-              <p className="text-xs text-brand-gray font-medium mt-1 leading-relaxed">
-                Complete engineering range of Three-Phase DOL Motor Starters, Earth Leakage Circuit Breakers (ELCB), Automatic Voltage Stabilizers, Electronic Phase Changers, and Astronomical Timers.
+              <p className="text-[11px] text-brand-gray font-medium mt-1 leading-relaxed">
+                Complete engineering range — DOL Motor Starters, Earth Leakage Circuit Breakers (ELCB), Automatic Voltage Stabilizers, Electronic Phase Changers, and Astronomical Timers.
               </p>
               
-              <div className="mt-3 flex flex-wrap items-center gap-3 text-xs font-bold text-brand-dark">
+              <div className="mt-2 flex flex-wrap items-center gap-3 text-[11px] font-bold text-brand-dark">
                 <span className="flex items-center gap-1.5 text-brand-red">
-                  <CheckCircle2 className="w-3.5 h-3.5" /> {selectedProducts.length} Equipment Models Featured
+                  <CheckCircle2 className="w-3 h-3" /> {selectedProducts.length} Equipment Models
                 </span>
                 <span>•</span>
                 <span>Gandhidham, Gujarat</span>
                 <span>•</span>
-                <span>100% Tested & Certified</span>
+                <span>100% Tested &amp; Certified</span>
               </div>
             </div>
 
           </div>
 
           {/* Cover Footer Strip */}
-          <div className="bg-brand-dark text-white px-6 py-3 flex items-center justify-between text-xs">
+          <div className="bg-brand-dark text-white px-6 py-2.5 flex items-center justify-between text-xs flex-shrink-0">
             <div className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-brand-red" />
               <span className="font-black uppercase tracking-wider text-[11px]">GELCO PLUS ELECTRICALS</span>
@@ -578,46 +578,46 @@ export default function CatalogMaker() {
               key={product._id}
               className="catalog-page a4-page bg-white relative flex flex-col justify-between shadow-xl mx-auto overflow-hidden print:shadow-none"
             >
-              
+
               {/* Product Page Header */}
-              <div className="px-6 py-2.5 flex items-center justify-between gap-3 border-b border-gray-200 flex-wrap">
+              <div className="px-6 py-2 flex items-center justify-between gap-3 border-b border-gray-200 flex-shrink-0" style={{minHeight: '44px'}}>
                 <div className="flex items-center gap-2 flex-shrink-0">
-                  <img src="/flower.png" alt="GELCO" className="h-7 w-7 object-contain" />
-                  <img src="/gelco_text.png" alt="GELCO" className="h-4.5 object-contain" />
-                  <span className="text-[9px] font-black uppercase tracking-wider text-brand-dark pl-2 border-l border-gray-300">
+                  <img src="/flower.png" alt="GELCO" className="h-6 w-6 object-contain" />
+                  <img src="/gelco_text.png" alt="GELCO" className="h-4 object-contain" />
+                  <span className="text-[8px] font-black uppercase tracking-wider text-brand-dark pl-2 border-l border-gray-300">
                     Plus Electricals
                   </span>
                 </div>
 
-                <div className="flex items-center gap-2 flex-shrink-0 flex-wrap">
-                  <span className="text-[9px] font-black uppercase tracking-wider bg-brand-red/10 text-brand-red px-2.5 py-1 rounded-full whitespace-nowrap">
+                <div className="flex items-center gap-2 flex-shrink-0">
+                  <span className="text-[9px] font-black uppercase tracking-wider bg-brand-red/10 text-brand-red px-2.5 py-0.5 rounded-full whitespace-nowrap">
                     {product.category?.name || 'Equipment'}
                   </span>
                   {product.model && (
-                    <span className="text-[9px] font-mono font-black bg-brand-dark text-white px-2.5 py-1 rounded whitespace-nowrap">
-                      Model: {product.model}
+                    <span className="text-[9px] font-mono font-black bg-brand-dark text-white px-2.5 py-0.5 rounded whitespace-nowrap">
+                      {product.model}
                     </span>
                   )}
                 </div>
               </div>
 
               {/* Product Page Body */}
-              <div className="px-6 py-3 flex-1 flex flex-col justify-start space-y-3.5 overflow-hidden">
+              <div className="px-6 py-2 flex-1 flex flex-col gap-2.5 overflow-hidden">
                 
                 {/* Title & Short Description */}
                 <div>
-                  <h1 className="text-lg sm:text-xl font-black text-brand-dark uppercase tracking-tight leading-snug">
+                  <h1 className="text-base font-black text-brand-dark uppercase tracking-tight leading-snug">
                     {product.name}
                   </h1>
                   {product.shortDescription && (
-                    <p className="text-xs text-brand-gray font-medium mt-0.5 leading-relaxed">
+                    <p className="text-[11px] text-brand-gray font-medium mt-0.5 leading-relaxed">
                       {product.shortDescription}
                     </p>
                   )}
                 </div>
 
                 {/* Visual Image / Technical Spec Banner */}
-                <div className="h-36 sm:h-40 bg-gradient-to-r from-gray-50 via-white to-gray-50 rounded-xl border border-gray-200 p-3 flex items-center justify-center relative overflow-hidden shadow-xs">
+                <div className="h-36 bg-gradient-to-r from-gray-50 via-white to-gray-50 rounded-xl border border-gray-200 p-3 flex items-center justify-center relative overflow-hidden shadow-xs flex-shrink-0">
                   {hasImage ? (
                     <img
                       src={product.images[0].url}
