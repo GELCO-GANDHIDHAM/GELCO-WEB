@@ -22,6 +22,7 @@ import AdminProducts from './pages/Admin/Products';
 import AdminQueries from './pages/Admin/Queries';
 import AdminGallery from './pages/Admin/Gallery';
 import AdminFooterSettings from './pages/Admin/FooterSettings';
+import AdminCatalogMaker from './pages/Admin/CatalogMaker';
 
 /* Components */
 import VideoIntro from './components/common/VideoIntro';
@@ -53,6 +54,7 @@ function App() {
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<Dashboard />} />
             <Route path="dashboard" element={<Dashboard />} />
+            <Route path="catalog-maker" element={<AdminCatalogMaker />} />
             <Route path="categories" element={<AdminCategories />} />
             <Route path="products" element={<AdminProducts />} />
             <Route path="queries" element={<AdminQueries />} />

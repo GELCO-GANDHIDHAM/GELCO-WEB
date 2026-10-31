@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Navigate, Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, Package, MessageSquare, Tags, LogOut, Menu, X, ChevronRight, Image as ImageIcon, Building2 } from 'lucide-react';
+import { LayoutDashboard, Package, MessageSquare, Tags, LogOut, Menu, X, ChevronRight, Image as ImageIcon, Building2, FileText } from 'lucide-react';
 
 export default function AdminLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -23,6 +23,12 @@ export default function AdminLayout() {
       path: '/admin/dashboard',
       icon: LayoutDashboard,
       badge: 'Home',
+    },
+    {
+      name: 'Catalog Maker',
+      path: '/admin/catalog-maker',
+      icon: FileText,
+      badge: 'PDF',
     },
     {
       name: 'Manage Products',
@@ -57,6 +63,7 @@ export default function AdminLayout() {
 
   const getPageTitle = () => {
     if (location.pathname.startsWith('/admin/dashboard')) return 'Dashboard Overview';
+    if (location.pathname.startsWith('/admin/catalog-maker')) return 'Catalog Maker & PDF Studio';
     if (location.pathname.startsWith('/admin/products')) return 'Manage Products';
     if (location.pathname.startsWith('/admin/gallery')) return 'Photo Gallery Management';
     if (location.pathname.startsWith('/admin/queries')) return 'Customer Queries';

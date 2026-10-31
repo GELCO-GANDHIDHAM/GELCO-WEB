@@ -18,7 +18,8 @@ import {
   EyeOff,
   ChevronRight,
   Database,
-  Cloud
+  Cloud,
+  FileText
 } from 'lucide-react';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
 import toast from 'react-hot-toast';
@@ -94,6 +95,14 @@ export default function Dashboard() {
               <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
               <span className="hidden sm:inline">Refresh</span>
             </button>
+
+            <Link
+              to="/admin/catalog-maker"
+              className="inline-flex items-center gap-2 bg-brand-red hover:bg-brand-red-dark text-white font-black text-xs uppercase tracking-wider px-4 py-2.5 rounded-xl shadow-xs hover:shadow-brand-red/30 transition-all active:scale-95"
+            >
+              <FileText className="h-3.5 w-3.5" />
+              <span>Catalog Maker</span>
+            </Link>
 
             <a
               href="/"
