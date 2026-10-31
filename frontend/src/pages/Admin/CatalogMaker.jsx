@@ -7,19 +7,15 @@ import {
   CheckSquare, 
   Square, 
   Search, 
-  Filter, 
   Sparkles, 
   CheckCircle2, 
   Phone, 
-  Mail, 
   MapPin, 
   Globe, 
   Layers, 
   Shield, 
   Zap, 
-  ArrowRight,
   ExternalLink,
-  ChevronLeft,
   X,
   RefreshCw
 } from 'lucide-react';
@@ -130,7 +126,7 @@ export default function CatalogMaker() {
     const previousTitle = document.title;
     document.title = `GELCO_Product_Catalog_${selectedProducts.length}_Products`;
     
-    // Switch to preview mode first if not already
+    // Switch to preview mode first
     setPreviewMode(true);
     
     setTimeout(() => {
@@ -150,7 +146,6 @@ export default function CatalogMaker() {
       setIsDownloadingPdf(true);
       toast.loading('Generating PDF catalog, please wait...', { id: 'pdf-gen' });
 
-      // Make sure preview is rendered
       setPreviewMode(true);
       await new Promise((resolve) => setTimeout(resolve, 500));
 
@@ -190,7 +185,7 @@ export default function CatalogMaker() {
   const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(COMPANY.address)}`;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 print:space-y-0 print:p-0 print:m-0">
       
       {/* ============================================================ */}
       {/* 1. TOP HEADER & ACTION CONTROLS                              */}
@@ -470,7 +465,7 @@ export default function CatalogMaker() {
       {/* ============================================================ */}
       <div 
         ref={printAreaRef}
-        className={`${previewMode ? 'block' : 'hidden print:block'} space-y-8 print:space-y-0`}
+        className={`${previewMode ? 'block' : 'hidden print:block'} space-y-8 print:space-y-0 print:m-0 print:p-0 print:w-full`}
       >
         <div className="bg-brand-dark text-white p-4 rounded-xl flex items-center justify-between print:hidden">
           <div className="flex items-center gap-2">
@@ -488,67 +483,67 @@ export default function CatalogMaker() {
         </div>
 
         {/* ------------------------------------------------------------ */}
-        {/* PAGE 1: COVER PAGE                                           */}
+        {/* PAGE 1: COVER PAGE (Calibrated for strict 1-page A4 height)   */}
         {/* ------------------------------------------------------------ */}
-        <div className="catalog-page a4-page bg-white relative flex flex-col justify-between shadow-2xl mx-auto overflow-hidden print:shadow-none">
+        <div className="catalog-page a4-page bg-white relative flex flex-col justify-between shadow-xl mx-auto overflow-hidden print:shadow-none">
           
           {/* Top Brand Header Bar */}
-          <div className="p-8 sm:p-12 pb-4 flex items-center justify-between border-b-2 border-brand-red">
-            <div className="flex items-center gap-3">
-              <img src="/flower.png" alt="GELCO" className="h-14 w-14 object-contain" />
+          <div className="px-6 py-4 flex items-center justify-between border-b-2 border-brand-red">
+            <div className="flex items-center gap-2.5">
+              <img src="/flower.png" alt="GELCO" className="h-10 w-10 object-contain" />
               <div className="flex flex-col">
-                <img src="/gelco_text.png" alt="GELCO" className="h-8 object-contain self-start" />
-                <span className="text-[11px] font-black uppercase tracking-widest text-brand-dark mt-0.5">
+                <img src="/gelco_text.png" alt="GELCO" className="h-6 object-contain self-start" />
+                <span className="text-[10px] font-black uppercase tracking-widest text-brand-dark mt-0.5">
                   Plus Electricals
                 </span>
               </div>
             </div>
 
             <div className="text-right">
-              <span className="text-[10px] font-black uppercase tracking-widest text-brand-red bg-brand-red/10 px-3 py-1 rounded-full inline-block">
+              <span className="text-[9px] font-black uppercase tracking-widest text-brand-red bg-brand-red/10 px-2.5 py-0.5 rounded-full inline-block">
                 Authorized Catalog
               </span>
-              <p className="text-xs font-bold text-brand-dark mt-1">Edition 2026 – 2027</p>
+              <p className="text-[11px] font-bold text-brand-dark mt-0.5">Edition 2026 – 2027</p>
             </div>
           </div>
 
-          {/* Cover Middle Hero Showcase Banner */}
-          <div className="px-8 sm:px-12 py-6 flex-1 flex flex-col justify-center">
+          {/* Cover Middle Hero Showcase Content */}
+          <div className="px-6 py-4 flex-1 flex flex-col justify-between overflow-hidden">
             
             {/* Tagline Typography from Reference Photo */}
-            <div className="mb-6">
-              <span className="block text-xl sm:text-2xl font-light text-brand-dark leading-none">
+            <div className="my-1">
+              <span className="block text-lg sm:text-xl font-light text-brand-dark leading-none">
                 Powerful
               </span>
-              <span className="block text-4xl sm:text-6xl font-black text-brand-red leading-[0.95] tracking-tight my-1">
+              <span className="block text-3xl sm:text-4xl lg:text-5xl font-black text-brand-red leading-[0.95] tracking-tight my-1">
                 Security
               </span>
-              <span className="block text-lg sm:text-2xl font-normal text-brand-dark leading-none pl-12 sm:pl-16">
+              <span className="block text-base sm:text-lg font-normal text-brand-dark leading-none pl-8 sm:pl-10">
                 always<span className="text-brand-red font-black">.</span>
               </span>
             </div>
 
-            {/* Showcase Artwork Container */}
-            <div className="rounded-2xl overflow-hidden border border-gray-200 shadow-lg relative bg-neutral-900 mb-6">
+            {/* Showcase Artwork Image Banner */}
+            <div className="rounded-xl overflow-hidden border border-gray-200 shadow-sm relative bg-neutral-900 my-2">
               <img
                 src="/images/hero-showcase.png"
                 alt="GELCO Industrial Showcase"
-                className="w-full h-auto object-cover block"
+                className="w-full h-auto max-h-52 object-cover block"
               />
             </div>
 
             {/* Catalog Title Block */}
-            <div className="bg-gray-50 border-l-4 border-brand-red p-6 rounded-r-xl">
-              <h2 className="text-2xl sm:text-3xl font-black text-brand-dark uppercase tracking-tight">
+            <div className="bg-gray-50 border-l-4 border-brand-red p-4 rounded-r-xl my-1">
+              <h2 className="text-lg sm:text-xl font-black text-brand-dark uppercase tracking-tight">
                 Official Product Specification Catalog
               </h2>
-              <p className="text-xs sm:text-sm text-brand-gray font-medium mt-1 leading-relaxed">
+              <p className="text-xs text-brand-gray font-medium mt-1 leading-relaxed">
                 Complete engineering range of Three-Phase DOL Motor Starters, Earth Leakage Circuit Breakers (ELCB), Automatic Voltage Stabilizers, Electronic Phase Changers, and Astronomical Timers.
               </p>
               
-              <div className="mt-4 flex flex-wrap items-center gap-4 text-xs font-bold text-brand-dark">
+              <div className="mt-3 flex flex-wrap items-center gap-3 text-xs font-bold text-brand-dark">
                 <span className="flex items-center gap-1.5 text-brand-red">
-                  <CheckCircle2 className="w-4 h-4" /> {selectedProducts.length} Equipment Models Featured
+                  <CheckCircle2 className="w-3.5 h-3.5" /> {selectedProducts.length} Equipment Models Featured
                 </span>
                 <span>•</span>
                 <span>Gandhidham, Gujarat</span>
@@ -560,15 +555,15 @@ export default function CatalogMaker() {
           </div>
 
           {/* Cover Footer Strip */}
-          <div className="bg-brand-dark text-white p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+          <div className="bg-brand-dark text-white px-6 py-3 flex items-center justify-between text-xs">
             <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-brand-red" />
-              <span className="font-black uppercase tracking-wider">GELCO PLUS ELECTRICALS</span>
-              <span className="text-gray-400">|</span>
-              <span className="text-gray-300">Gandhidham (Kutch), Gujarat</span>
+              <span className="w-2 h-2 rounded-full bg-brand-red" />
+              <span className="font-black uppercase tracking-wider text-[11px]">GELCO PLUS ELECTRICALS</span>
+              <span className="text-gray-400 text-[10px]">|</span>
+              <span className="text-gray-300 text-[10px]">Gandhidham (Kutch), Gujarat</span>
             </div>
-            <div className="font-mono text-gray-400 text-[11px]">
-              Page 1 of {selectedProducts.length + 2}
+            <div className="font-mono text-gray-400 text-[10px]">
+              Cover Page • 1 of {selectedProducts.length + 2}
             </div>
           </div>
 
@@ -585,25 +580,25 @@ export default function CatalogMaker() {
           return (
             <div
               key={product._id}
-              className="catalog-page a4-page bg-white relative flex flex-col justify-between shadow-2xl mx-auto overflow-hidden print:shadow-none print:break-before-page"
+              className="catalog-page a4-page bg-white relative flex flex-col justify-between shadow-xl mx-auto overflow-hidden print:shadow-none"
             >
               
               {/* Product Page Header */}
-              <div className="p-6 sm:p-8 pb-3 flex items-center justify-between border-b border-gray-200">
-                <div className="flex items-center gap-2.5">
-                  <img src="/flower.png" alt="GELCO" className="h-8 w-8 object-contain" />
-                  <img src="/gelco_text.png" alt="GELCO" className="h-5 object-contain" />
-                  <span className="text-[10px] font-black uppercase tracking-wider text-brand-dark pl-2 border-l border-gray-300">
+              <div className="px-6 py-2.5 flex items-center justify-between border-b border-gray-200">
+                <div className="flex items-center gap-2">
+                  <img src="/flower.png" alt="GELCO" className="h-7 w-7 object-contain" />
+                  <img src="/gelco_text.png" alt="GELCO" className="h-4.5 object-contain" />
+                  <span className="text-[9px] font-black uppercase tracking-wider text-brand-dark pl-2 border-l border-gray-300">
                     Plus Electricals
                   </span>
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <span className="text-[10px] font-black uppercase tracking-wider bg-brand-red/10 text-brand-red px-2.5 py-1 rounded-full">
+                  <span className="text-[9px] font-black uppercase tracking-wider bg-brand-red/10 text-brand-red px-2 py-0.5 rounded-full">
                     {product.category?.name || 'Equipment'}
                   </span>
                   {product.model && (
-                    <span className="text-xs font-mono font-black bg-brand-dark text-white px-2.5 py-0.5 rounded">
+                    <span className="text-[10px] font-mono font-black bg-brand-dark text-white px-2 py-0.5 rounded">
                       Model: {product.model}
                     </span>
                   )}
@@ -611,22 +606,22 @@ export default function CatalogMaker() {
               </div>
 
               {/* Product Page Body */}
-              <div className="p-6 sm:p-8 flex-1 flex flex-col justify-start space-y-5 overflow-hidden">
+              <div className="px-6 py-3 flex-1 flex flex-col justify-start space-y-3.5 overflow-hidden">
                 
                 {/* Title & Short Description */}
                 <div>
-                  <h1 className="text-xl sm:text-2xl font-black text-brand-dark uppercase tracking-tight leading-snug">
+                  <h1 className="text-lg sm:text-xl font-black text-brand-dark uppercase tracking-tight leading-snug">
                     {product.name}
                   </h1>
                   {product.shortDescription && (
-                    <p className="text-xs sm:text-sm text-brand-gray font-medium mt-1 leading-relaxed">
+                    <p className="text-xs text-brand-gray font-medium mt-0.5 leading-relaxed">
                       {product.shortDescription}
                     </p>
                   )}
                 </div>
 
                 {/* Visual Image / Technical Spec Banner */}
-                <div className="h-44 sm:h-52 bg-gradient-to-r from-gray-50 via-white to-gray-50 rounded-2xl border border-gray-200 p-4 flex items-center justify-center relative overflow-hidden shadow-xs">
+                <div className="h-36 sm:h-40 bg-gradient-to-r from-gray-50 via-white to-gray-50 rounded-xl border border-gray-200 p-3 flex items-center justify-center relative overflow-hidden shadow-xs">
                   {hasImage ? (
                     <img
                       src={product.images[0].url}
@@ -634,20 +629,19 @@ export default function CatalogMaker() {
                       className="max-h-full max-w-full object-contain select-none"
                     />
                   ) : (
-                    /* High-End Vector Representation Card */
-                    <div className="flex items-center gap-6 text-left w-full max-w-md">
-                      <div className="w-20 h-20 bg-brand-red/10 border-2 border-brand-red/30 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-inner">
-                        <Zap className="w-10 h-10 text-brand-red" />
+                    <div className="flex items-center gap-4 text-left w-full max-w-md">
+                      <div className="w-16 h-16 bg-brand-red/10 border border-brand-red/30 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <Zap className="w-8 h-8 text-brand-red" />
                       </div>
                       <div>
-                        <span className="text-[10px] font-mono font-black uppercase tracking-widest text-brand-red">
+                        <span className="text-[9px] font-mono font-black uppercase tracking-widest text-brand-red">
                           GELCO HIGH RELIABILITY SERIES
                         </span>
-                        <h4 className="text-base font-black text-brand-dark uppercase mt-0.5">
+                        <h4 className="text-sm font-black text-brand-dark uppercase mt-0.5">
                           {product.model || 'Standard Unit'}
                         </h4>
-                        <p className="text-xs text-brand-gray font-medium">
-                          Built with heavy-duty contacts, flame-retardant housing & precision trip mechanisms.
+                        <p className="text-[11px] text-brand-gray font-medium">
+                          Built with heavy-duty contacts, flame-retardant ABS/sheet metal housing & precision trip mechanisms.
                         </p>
                       </div>
                     </div>
@@ -656,11 +650,11 @@ export default function CatalogMaker() {
 
                 {/* Comprehensive Description */}
                 {product.description && (
-                  <div className="bg-gray-50/70 p-4 rounded-xl border border-gray-200/80">
-                    <h3 className="text-xs font-black uppercase tracking-wider text-brand-dark mb-1">
+                  <div className="bg-gray-50/70 p-3 rounded-lg border border-gray-200/80">
+                    <h3 className="text-[10px] font-black uppercase tracking-wider text-brand-dark mb-0.5">
                       Product Overview
                     </h3>
-                    <p className="text-xs text-gray-700 leading-relaxed font-normal">
+                    <p className="text-[11px] text-gray-700 leading-relaxed font-normal">
                       {product.description}
                     </p>
                   </div>
@@ -669,14 +663,14 @@ export default function CatalogMaker() {
                 {/* Key Features (Bullets) */}
                 {product.features && product.features.length > 0 && (
                   <div>
-                    <h3 className="text-xs font-black uppercase tracking-wider text-brand-dark mb-2 flex items-center gap-1.5">
-                      <Sparkles className="w-3.5 h-3.5 text-brand-red" />
+                    <h3 className="text-[10px] font-black uppercase tracking-wider text-brand-dark mb-1.5 flex items-center gap-1.5">
+                      <Sparkles className="w-3 h-3 text-brand-red" />
                       Key Features & Protections
                     </h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                      {product.features.map((feat, fIdx) => (
-                        <div key={fIdx} className="flex items-start gap-2 text-xs text-gray-800">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-brand-red flex-shrink-0 mt-0.5" />
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+                      {product.features.slice(0, 8).map((feat, fIdx) => (
+                        <div key={fIdx} className="flex items-start gap-1.5 text-[11px] text-gray-800">
+                          <CheckCircle2 className="w-3 h-3 text-brand-red flex-shrink-0 mt-0.5" />
                           <span className="leading-tight font-medium">{feat}</span>
                         </div>
                       ))}
@@ -687,25 +681,25 @@ export default function CatalogMaker() {
                 {/* Technical Specifications Table */}
                 {product.specifications && product.specifications.length > 0 && (
                   <div>
-                    <h3 className="text-xs font-black uppercase tracking-wider text-brand-dark mb-2 flex items-center gap-1.5">
-                      <Shield className="w-3.5 h-3.5 text-brand-red" />
+                    <h3 className="text-[10px] font-black uppercase tracking-wider text-brand-dark mb-1.5 flex items-center gap-1.5">
+                      <Shield className="w-3 h-3 text-brand-red" />
                       Technical Specifications
                     </h3>
-                    <div className="border border-gray-200 rounded-xl overflow-hidden shadow-xs">
-                      <table className="w-full text-xs text-left">
+                    <div className="border border-gray-200 rounded-lg overflow-hidden shadow-xs">
+                      <table className="w-full text-left">
                         <thead>
-                          <tr className="bg-brand-dark text-white text-[10px] uppercase font-black tracking-wider">
-                            <th className="py-2 px-3.5 w-1/3">Parameter</th>
-                            <th className="py-2 px-3.5 w-2/3">Specification Value</th>
+                          <tr className="bg-brand-dark text-white text-[9px] uppercase font-black tracking-wider">
+                            <th className="py-1.5 px-3 w-1/3">Parameter</th>
+                            <th className="py-1.5 px-3 w-2/3">Specification Value</th>
                           </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-200 bg-white">
-                          {product.specifications.map((spec, sIdx) => (
+                          {product.specifications.slice(0, 10).map((spec, sIdx) => (
                             <tr key={sIdx} className={sIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50/70'}>
-                              <td className="py-2 px-3.5 font-bold text-brand-dark text-[11px]">
+                              <td className="py-1.5 px-3 font-bold text-brand-dark text-[10px]">
                                 {spec.key}
                               </td>
-                              <td className="py-2 px-3.5 font-medium text-gray-800 text-[11px]">
+                              <td className="py-1.5 px-3 font-medium text-gray-800 text-[10px]">
                                 {spec.value}
                               </td>
                             </tr>
@@ -719,11 +713,11 @@ export default function CatalogMaker() {
               </div>
 
               {/* Running Product Page Footer */}
-              <div className="bg-gray-100 p-4 sm:p-5 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-brand-gray">
+              <div className="bg-gray-100 px-6 py-2 border-t border-gray-200 flex items-center justify-between text-xs text-brand-gray">
                 <div className="flex items-center gap-3">
                   <a
                     href={`tel:${COMPANY.phone}`}
-                    className="hover:text-brand-red font-bold flex items-center gap-1 text-[11px] print:text-black"
+                    className="hover:text-brand-red font-bold flex items-center gap-1 text-[10px] print:text-black"
                   >
                     <Phone className="w-3 h-3 text-brand-red" />
                     <span>Inquiry: {COMPANY.phoneDisplay}</span>
@@ -733,7 +727,7 @@ export default function CatalogMaker() {
                     href={websiteUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="hover:text-brand-red font-bold flex items-center gap-1 text-[11px] print:text-black"
+                    className="hover:text-brand-red font-bold flex items-center gap-1 text-[10px] print:text-black"
                   >
                     <Globe className="w-3 h-3 text-brand-red" />
                     <span>gelcogandhidham-eight.vercel.app</span>
@@ -751,15 +745,16 @@ export default function CatalogMaker() {
 
         {/* ------------------------------------------------------------ */}
         {/* FINAL PAGE: CLOSING BACK COVER & CLICKABLE CONTACT LINKS     */}
+        {/* (Calibrated for strict 1-page A4 height)                     */}
         {/* ------------------------------------------------------------ */}
-        <div className="catalog-page a4-page bg-white relative flex flex-col justify-between shadow-2xl mx-auto overflow-hidden print:shadow-none print:break-before-page">
+        <div className="catalog-page a4-page bg-white relative flex flex-col justify-between shadow-xl mx-auto overflow-hidden print:shadow-none">
           
           {/* Top Brand Banner */}
-          <div className="p-8 sm:p-12 pb-4 flex items-center justify-between border-b-2 border-brand-red">
-            <div className="flex items-center gap-3">
-              <img src="/flower.png" alt="GELCO" className="h-12 w-12 object-contain" />
+          <div className="px-6 py-4 flex items-center justify-between border-b-2 border-brand-red">
+            <div className="flex items-center gap-2.5">
+              <img src="/flower.png" alt="GELCO" className="h-10 w-10 object-contain" />
               <div className="flex flex-col">
-                <img src="/gelco_text.png" alt="GELCO" className="h-7 object-contain self-start" />
+                <img src="/gelco_text.png" alt="GELCO" className="h-6 object-contain self-start" />
                 <span className="text-[10px] font-black uppercase tracking-widest text-brand-dark mt-0.5">
                   Plus Electricals
                 </span>
@@ -771,42 +766,42 @@ export default function CatalogMaker() {
           </div>
 
           {/* Middle: 4 High-Impact Clickable Contact Cards */}
-          <div className="p-8 sm:p-12 flex-1 flex flex-col justify-center space-y-6">
+          <div className="px-6 py-4 flex-1 flex flex-col justify-center space-y-4 overflow-hidden">
             
-            <div className="text-center max-w-xl mx-auto mb-2">
-              <span className="text-xs font-black uppercase tracking-widest text-brand-red bg-brand-red/10 px-3.5 py-1 rounded-full inline-block mb-3">
+            <div className="text-center max-w-xl mx-auto mb-1">
+              <span className="text-[10px] font-black uppercase tracking-widest text-brand-red bg-brand-red/10 px-3 py-0.5 rounded-full inline-block mb-1.5">
                 Connect With Us
               </span>
-              <h2 className="text-2xl sm:text-3xl font-black text-brand-dark uppercase tracking-tight">
+              <h2 className="text-xl sm:text-2xl font-black text-brand-dark uppercase tracking-tight">
                 Order, Dealership & Technical Inquiry
               </h2>
-              <p className="text-xs sm:text-sm text-brand-gray font-medium mt-1">
-                Click on any contact method below to instantly call, send a WhatsApp message, locate our office, or visit the live digital catalog.
+              <p className="text-xs text-brand-gray font-medium mt-0.5">
+                Click on any contact card below to instantly call, message via WhatsApp, locate our showroom, or visit the live digital catalog.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
               
               {/* 1. Phone Hotline (Clickable tel: link) */}
               <a
                 href={`tel:${COMPANY.phone}`}
-                className="bg-gray-50 hover:bg-red-50/50 border border-gray-200 hover:border-brand-red/50 rounded-2xl p-5 transition-all flex items-start gap-4 group"
+                className="bg-gray-50 hover:bg-red-50/50 border border-gray-200 hover:border-brand-red/50 rounded-xl p-3.5 transition-all flex items-start gap-3 group"
               >
-                <div className="w-12 h-12 bg-white rounded-xl border border-gray-200 flex items-center justify-center text-brand-red group-hover:bg-brand-red group-hover:text-white transition-colors shadow-xs flex-shrink-0">
-                  <Phone className="w-6 h-6" />
+                <div className="w-10 h-10 bg-white rounded-lg border border-gray-200 flex items-center justify-center text-brand-red group-hover:bg-brand-red group-hover:text-white transition-colors shadow-xs flex-shrink-0">
+                  <Phone className="w-5 h-5" />
                 </div>
                 <div>
-                  <span className="text-[10px] font-black uppercase tracking-wider text-brand-red block">
+                  <span className="text-[9px] font-black uppercase tracking-wider text-brand-red block">
                     Direct Call Hotline
                   </span>
-                  <h4 className="font-extrabold text-brand-dark text-base mt-0.5 group-hover:text-brand-red transition-colors">
+                  <h4 className="font-extrabold text-brand-dark text-sm mt-0.5 group-hover:text-brand-red transition-colors">
                     {COMPANY.phoneDisplay}
                   </h4>
-                  <p className="text-xs text-brand-gray mt-1 font-medium">
+                  <p className="text-[11px] text-brand-gray mt-0.5 font-medium">
                     Contact: {COMPANY.contact}
                   </p>
-                  <span className="inline-flex items-center gap-1 text-[10px] font-bold text-brand-red mt-2">
-                    Click to Call <ExternalLink className="w-3 h-3" />
+                  <span className="inline-flex items-center gap-1 text-[9px] font-bold text-brand-red mt-1">
+                    Click to Call <ExternalLink className="w-2.5 h-2.5" />
                   </span>
                 </div>
               </a>
@@ -816,23 +811,23 @@ export default function CatalogMaker() {
                 href={`https://wa.me/${COMPANY.whatsapp}?text=${encodeURIComponent("Hello GELCO PLUS ELECTRICALS, I am inquiring about product catalog pricing and dealership.")}`}
                 target="_blank"
                 rel="noreferrer"
-                className="bg-gray-50 hover:bg-emerald-50/50 border border-gray-200 hover:border-emerald-500/50 rounded-2xl p-5 transition-all flex items-start gap-4 group"
+                className="bg-gray-50 hover:bg-emerald-50/50 border border-gray-200 hover:border-emerald-500/50 rounded-xl p-3.5 transition-all flex items-start gap-3 group"
               >
-                <div className="w-12 h-12 bg-white rounded-xl border border-gray-200 flex items-center justify-center text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white transition-colors shadow-xs flex-shrink-0">
-                  <ExternalLink className="w-6 h-6" />
+                <div className="w-10 h-10 bg-white rounded-lg border border-gray-200 flex items-center justify-center text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white transition-colors shadow-xs flex-shrink-0">
+                  <ExternalLink className="w-5 h-5" />
                 </div>
                 <div>
-                  <span className="text-[10px] font-black uppercase tracking-wider text-emerald-600 block">
+                  <span className="text-[9px] font-black uppercase tracking-wider text-emerald-600 block">
                     Instant WhatsApp Support
                   </span>
-                  <h4 className="font-extrabold text-brand-dark text-base mt-0.5 group-hover:text-emerald-700 transition-colors">
+                  <h4 className="font-extrabold text-brand-dark text-sm mt-0.5 group-hover:text-emerald-700 transition-colors">
                     +{COMPANY.whatsapp}
                   </h4>
-                  <p className="text-xs text-brand-gray mt-1 font-medium">
+                  <p className="text-[11px] text-brand-gray mt-0.5 font-medium">
                     Fast quotes, product PDF sheets & specs.
                   </p>
-                  <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-600 mt-2">
-                    Chat on WhatsApp <ExternalLink className="w-3 h-3" />
+                  <span className="inline-flex items-center gap-1 text-[9px] font-bold text-emerald-600 mt-1">
+                    Chat on WhatsApp <ExternalLink className="w-2.5 h-2.5" />
                   </span>
                 </div>
               </a>
@@ -842,23 +837,23 @@ export default function CatalogMaker() {
                 href={mapsUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="bg-gray-50 hover:bg-blue-50/50 border border-gray-200 hover:border-blue-500/50 rounded-2xl p-5 transition-all flex items-start gap-4 group"
+                className="bg-gray-50 hover:bg-blue-50/50 border border-gray-200 hover:border-blue-500/50 rounded-xl p-3.5 transition-all flex items-start gap-3 group"
               >
-                <div className="w-12 h-12 bg-white rounded-xl border border-gray-200 flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors shadow-xs flex-shrink-0">
-                  <MapPin className="w-6 h-6" />
+                <div className="w-10 h-10 bg-white rounded-lg border border-gray-200 flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors shadow-xs flex-shrink-0">
+                  <MapPin className="w-5 h-5" />
                 </div>
                 <div>
-                  <span className="text-[10px] font-black uppercase tracking-wider text-blue-600 block">
+                  <span className="text-[9px] font-black uppercase tracking-wider text-blue-600 block">
                     Showroom & Distribution Center
                   </span>
-                  <h4 className="font-extrabold text-brand-dark text-xs sm:text-sm mt-0.5 leading-snug">
+                  <h4 className="font-extrabold text-brand-dark text-xs mt-0.5 leading-snug">
                     {COMPANY.address}
                   </h4>
-                  <p className="text-xs text-brand-gray mt-1 font-medium">
+                  <p className="text-[10px] text-brand-gray mt-0.5 font-medium">
                     {COMPANY.city}
                   </p>
-                  <span className="inline-flex items-center gap-1 text-[10px] font-bold text-blue-600 mt-2">
-                    Open in Google Maps <ExternalLink className="w-3 h-3" />
+                  <span className="inline-flex items-center gap-1 text-[9px] font-bold text-blue-600 mt-1">
+                    Open in Google Maps <ExternalLink className="w-2.5 h-2.5" />
                   </span>
                 </div>
               </a>
@@ -868,23 +863,23 @@ export default function CatalogMaker() {
                 href={websiteUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="bg-gray-50 hover:bg-purple-50/50 border border-gray-200 hover:border-purple-500/50 rounded-2xl p-5 transition-all flex items-start gap-4 group"
+                className="bg-gray-50 hover:bg-purple-50/50 border border-gray-200 hover:border-purple-500/50 rounded-xl p-3.5 transition-all flex items-start gap-3 group"
               >
-                <div className="w-12 h-12 bg-white rounded-xl border border-gray-200 flex items-center justify-center text-purple-600 group-hover:bg-purple-600 group-hover:text-white transition-colors shadow-xs flex-shrink-0">
-                  <Globe className="w-6 h-6" />
+                <div className="w-10 h-10 bg-white rounded-lg border border-gray-200 flex items-center justify-center text-purple-600 group-hover:bg-purple-600 group-hover:text-white transition-colors shadow-xs flex-shrink-0">
+                  <Globe className="w-5 h-5" />
                 </div>
                 <div>
-                  <span className="text-[10px] font-black uppercase tracking-wider text-purple-600 block">
+                  <span className="text-[9px] font-black uppercase tracking-wider text-purple-600 block">
                     Live Web Portal
                   </span>
-                  <h4 className="font-extrabold text-brand-dark text-sm mt-0.5">
+                  <h4 className="font-extrabold text-brand-dark text-xs mt-0.5">
                     gelcogandhidham-eight.vercel.app
                   </h4>
-                  <p className="text-xs text-brand-gray mt-1 font-medium">
-                    Search active stock, submit online quotes & video demo.
+                  <p className="text-[10px] text-brand-gray mt-0.5 font-medium">
+                    Search active stock, submit online inquiries & video demo.
                   </p>
-                  <span className="inline-flex items-center gap-1 text-[10px] font-bold text-purple-600 mt-2">
-                    Visit Online Portal <ExternalLink className="w-3 h-3" />
+                  <span className="inline-flex items-center gap-1 text-[9px] font-bold text-purple-600 mt-1">
+                    Visit Online Portal <ExternalLink className="w-2.5 h-2.5" />
                   </span>
                 </div>
               </a>
@@ -892,19 +887,19 @@ export default function CatalogMaker() {
             </div>
 
             {/* Quality Certification Trust Badge */}
-            <div className="bg-neutral-900 text-white rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-brand-red flex items-center justify-center flex-shrink-0">
-                  <Shield className="w-6 h-6 text-white" />
+            <div className="bg-neutral-900 text-white rounded-xl p-3.5 flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-lg bg-brand-red flex items-center justify-center flex-shrink-0">
+                  <Shield className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <h4 className="font-black text-sm uppercase">100% Quality Assurance Tested</h4>
-                  <p className="text-xs text-gray-300">
+                  <h4 className="font-black text-xs uppercase">100% Quality Assurance Tested</h4>
+                  <p className="text-[10px] text-gray-300">
                     Engineered for extreme grid voltage fluctuations and harsh agricultural environments.
                   </p>
                 </div>
               </div>
-              <span className="text-[10px] font-mono font-bold bg-white/10 px-3 py-1.5 rounded-full text-white/90">
+              <span className="text-[9px] font-mono font-bold bg-white/10 px-2.5 py-1 rounded-full text-white/90">
                 GELCO PLUS VERIFIED
               </span>
             </div>
@@ -912,14 +907,14 @@ export default function CatalogMaker() {
           </div>
 
           {/* Back Cover Footer Strip */}
-          <div className="bg-brand-dark text-white p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+          <div className="bg-brand-dark text-white px-6 py-3 flex items-center justify-between text-xs">
             <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-brand-red" />
-              <span className="font-black uppercase tracking-wider">GELCO PLUS ELECTRICALS</span>
-              <span className="text-gray-400">|</span>
-              <span className="text-gray-300">All Rights Reserved © {new Date().getFullYear()}</span>
+              <span className="w-2 h-2 rounded-full bg-brand-red" />
+              <span className="font-black uppercase tracking-wider text-[11px]">GELCO PLUS ELECTRICALS</span>
+              <span className="text-gray-400 text-[10px]">|</span>
+              <span className="text-gray-300 text-[10px]">All Rights Reserved © {new Date().getFullYear()}</span>
             </div>
-            <div className="font-mono text-gray-400 text-[11px]">
+            <div className="font-mono text-gray-400 text-[10px]">
               Page {selectedProducts.length + 2} of {selectedProducts.length + 2} (End of Catalog)
             </div>
           </div>
@@ -930,41 +925,64 @@ export default function CatalogMaker() {
 
       {/* ============================================================ */}
       {/* 6. EMBEDDED PRINT STYLES FOR EXACT A4 PDF OUTPUT             */}
+      {/* Calibrated so no page element spills over to empty pages     */}
       {/* ============================================================ */}
       <style>{`
         .a4-page {
           width: 100%;
-          max-width: 800px;
+          max-width: 794px;
           min-height: 1120px;
+          box-sizing: border-box;
         }
 
         @media print {
           @page {
             size: A4 portrait;
-            margin: 0;
+            margin: 8mm;
           }
 
-          body {
-            background: white !important;
+          html, body {
             margin: 0 !important;
             padding: 0 !important;
+            background: #FFFFFF !important;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+            width: 100% !important;
+            height: 100% !important;
           }
 
           header, aside, nav, .print\\:hidden {
             display: none !important;
           }
 
-          .catalog-page {
-            width: 210mm !important;
-            min-height: 297mm !important;
-            height: 297mm !important;
-            max-width: 210mm !important;
-            padding: 0 !important;
+          main,
+          [class*="md:ml-"],
+          [class*="lg:ml-"] {
             margin: 0 !important;
+            margin-left: 0 !important;
+            padding: 0 !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            overflow: visible !important;
+          }
+
+          .catalog-page {
+            width: 100% !important;
+            height: 280mm !important;
+            max-height: 280mm !important;
+            box-sizing: border-box !important;
+            page-break-inside: avoid !important;
+            break-inside: avoid !important;
             page-break-after: always !important;
             break-after: page !important;
-            box-shadow: none !important;
+            overflow: hidden !important;
+            padding: 0 !important;
+            margin: 0 !important;
             border: none !important;
+            box-shadow: none !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: space-between !important;
           }
 
           .catalog-page:last-child {

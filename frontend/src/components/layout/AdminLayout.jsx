@@ -86,7 +86,7 @@ export default function AdminLayout() {
       <aside
         className={`fixed inset-y-0 left-0 z-50 w-64 md:w-72 bg-brand-dark text-white transform ${
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-        } md:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col shadow-2xl border-r border-brand-gray/30`}
+        } md:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col shadow-2xl border-r border-brand-gray/30 print:hidden`}
       >
         {/* Sidebar Brand Header */}
         <div className="h-20 px-6 flex items-center justify-between border-b border-white/10 bg-black/20">
@@ -167,9 +167,9 @@ export default function AdminLayout() {
       </aside>
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col md:ml-64 lg:ml-72 w-full min-w-0">
+      <div className="flex-1 flex flex-col md:ml-64 lg:ml-72 w-full min-w-0 print:ml-0 print:p-0 print:w-full">
         {/* Top Header Bar */}
-        <header className="h-16 bg-white border-b border-brand-gray-border flex items-center justify-between px-5 sm:px-8 sticky top-0 z-30 shadow-sm">
+        <header className="h-16 bg-white border-b border-brand-gray-border flex items-center justify-between px-5 sm:px-8 sticky top-0 z-30 shadow-sm print:hidden">
           <div className="flex items-center gap-4">
             <button
               onClick={() => setSidebarOpen(true)}
@@ -198,7 +198,7 @@ export default function AdminLayout() {
         </header>
 
         {/* Main Body */}
-        <main className="flex-1 p-5 sm:p-8 lg:p-10 overflow-auto">
+        <main className="flex-1 p-5 sm:p-8 lg:p-10 overflow-auto print:p-0 print:m-0 print:overflow-visible">
           <Outlet />
         </main>
       </div>
