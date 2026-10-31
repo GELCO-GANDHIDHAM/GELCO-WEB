@@ -7,29 +7,31 @@ const seed = async () => {
   await mongoose.connect(process.env.MONGODB_URI);
   console.log('✅ Connected');
 
-  const defaultMobile = (process.env.ADMIN_DEFAULT_MOBILE || '9824740023').trim();
-  const defaultPassword = process.env.ADMIN_DEFAULT_PASSWORD || 'Gelco@2024';
+  const defaultAdmins = [
+    {
+      name: 'GELCO Admin',
+      mobileNumber: (process.env.ADMIN_DEFAULT_MOBILE || '9824740023').trim(),
+      password: process.env.ADMIN_DEFAULT_PASSWORD || 'Gelco@2024',
+      role: 'superadmin',
+    },
+    {
+      name: 'GELCO Admin',
+      mobileNumber: '6351316337',
+      password: 'Gelco@1010',
+      role: 'admin',
+    },
+  ];
 
-  const existing = await Admin.findOne({ mobileNumber: defaultMobile });
-  if (existing) {
-    console.log('ℹ️  Admin already exists — no changes made.');
-    console.log(`   Mobile  : ${defaultMobile}`);
-    process.exit(0);
+  for (const adminData of defaultAdmins) {
+    const existing = await Admin.findOne({ mobileNumber: adminData.mobileNumber });
+    if (existing) {
+      console.log(`ℹ️  Admin already exists: ${adminData.mobileNumber}`);
+    } else {
+      await Admin.create(adminData);
+      console.log(`✅ Created admin: ${adminData.mobileNumber}`);
+    }
   }
 
-  await Admin.create({
-    name:         'GELCO Admin',
-    mobileNumber: defaultMobile,
-    password:     defaultPassword,
-    role:         'superadmin',
-  });
-
-  console.log('');
-  console.log('✅ Admin account created!');
-  console.log(`   Mobile  : ${defaultMobile}`);
-  console.log(`   Password: ${defaultPassword}`);
-  console.log('');
-  console.log('⚠️  IMPORTANT: Change this password after first login!');
   process.exit(0);
 };
 
