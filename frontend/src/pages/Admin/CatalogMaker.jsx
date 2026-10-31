@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { 
   FileText, 
-  Download, 
+  Download,
   Printer, 
   Eye, 
   CheckSquare, 
@@ -17,7 +17,8 @@ import {
   Zap, 
   ExternalLink,
   X,
-  RefreshCw
+  RefreshCw,
+  Loader2
 } from 'lucide-react';
 import api from '../../services/api';
 import { COMPANY } from '../../utils/constants';
@@ -135,7 +136,7 @@ export default function CatalogMaker() {
     }, 400);
   };
 
-  // Direct jsPDF generation download
+  // Direct jsPDF generation download with 100% clickable native hyperlinks
   const handleDirectDownloadPdf = async () => {
     if (selectedProducts.length === 0) {
       toast.error('Please select at least 1 product for the catalog');
@@ -144,12 +145,19 @@ export default function CatalogMaker() {
 
     try {
       setIsDownloadingPdf(true);
-      toast.loading('Generating PDF catalog, please wait...', { id: 'pdf-gen' });
+      toast.loading('Preparing high-resolution catalog with clickable links...', { id: 'pdf-gen' });
 
+      // Switch to preview mode to render DOM nodes
       setPreviewMode(true);
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      await new Promise((resolve) => setTimeout(resolve, 600));
 
-      const pdf = new jsPDF('p', 'mm', 'a4');
+      const pdf = new jsPDF({
+        orientation: 'p',
+        unit: 'mm',
+        format: 'a4',
+        compress: true,
+      });
+
       const pages = printAreaRef.current?.querySelectorAll('.catalog-page');
 
       if (!pages || pages.length === 0) {
@@ -158,6 +166,8 @@ export default function CatalogMaker() {
 
       for (let i = 0; i < pages.length; i++) {
         const pageEl = pages[i];
+        toast.loading(`Processing page ${i + 1} of ${pages.length}...`, { id: 'pdf-gen' });
+
         const canvas = await html2canvas(pageEl, {
           scale: 2,
           useCORS: true,
@@ -167,11 +177,30 @@ export default function CatalogMaker() {
 
         const imgData = canvas.toDataURL('image/jpeg', 0.95);
         if (i > 0) pdf.addPage('a4', 'p');
-        pdf.addImage(imgData, 'JPEG', 0, 0, 210, 297);
+        pdf.addImage(imgData, 'JPEG', 0, 0, 210, 297, undefined, 'FAST');
+
+        // Extract and embed clickable hyperlinks into the PDF document
+        const links = pageEl.querySelectorAll('a[href]');
+        const pageRect = pageEl.getBoundingClientRect();
+
+        links.forEach((linkEl) => {
+          const linkRect = linkEl.getBoundingClientRect();
+          if (linkRect.width > 0 && linkRect.height > 0) {
+            const x = ((linkRect.left - pageRect.left) / pageRect.width) * 210;
+            const y = ((linkRect.top - pageRect.top) / pageRect.height) * 297;
+            const w = (linkRect.width / pageRect.width) * 210;
+            const h = (linkRect.height / pageRect.height) * 297;
+            
+            const href = linkEl.getAttribute('href') || linkEl.href;
+            if (href && !href.startsWith('#')) {
+              pdf.link(x, y, w, h, { url: href });
+            }
+          }
+        });
       }
 
       pdf.save(`GELCO_Official_Catalog_${selectedProducts.length}_Products.pdf`);
-      toast.success('Catalog PDF downloaded successfully!', { id: 'pdf-gen' });
+      toast.success('Catalog PDF with clickable links downloaded successfully!', { id: 'pdf-gen' });
     } catch (err) {
       console.error('jsPDF generation failed:', err);
       toast.error('Direct PDF export encountered an error. Opening print preview...', { id: 'pdf-gen' });
@@ -220,26 +249,31 @@ export default function CatalogMaker() {
 
           <button
             type="button"
-            onClick={handlePrintPdf}
-            disabled={selectedProducts.length === 0}
+            onClick={handleDirectDownloadPdf}
+            disabled={selectedProducts.length === 0 || isDownloadingPdf}
             className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-brand-red hover:bg-brand-red-dark text-white rounded-xl text-xs font-black uppercase tracking-wider transition-all shadow-md hover:shadow-brand-red/30 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <Printer className="w-4 h-4" />
-            <span>Download Catalog (Print PDF)</span>
+            {isDownloadingPdf ? (
+              <Loader2 className="w-4 h-4 animate-spin" />
+            ) : (
+              <Download className="w-4 h-4" />
+            )}
+            <span>{isDownloadingPdf ? 'Generating PDF...' : 'Download Catalog PDF'}</span>
           </button>
 
           <button
             type="button"
-            onClick={handleDirectDownloadPdf}
-            disabled={selectedProducts.length === 0 || isDownloadingPdf}
+            onClick={handlePrintPdf}
+            disabled={selectedProducts.length === 0}
             className="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-neutral-900 hover:bg-black text-white rounded-xl text-xs font-black uppercase tracking-wider transition-all shadow-sm active:scale-95 disabled:opacity-50"
-            title="Download .PDF file directly to your device"
+            title="Open browser print dialog"
           >
-            <Download className="w-4 h-4" />
-            <span>{isDownloadingPdf ? 'Generating...' : 'Direct PDF File'}</span>
+            <Printer className="w-4 h-4" />
+            <span>Print via Browser</span>
           </button>
         </div>
       </div>
+
 
       {/* ============================================================ */}
       {/* 2. STATS BAR & QUICK SELECTION CONTROLS                      */}
@@ -479,67 +513,67 @@ export default function CatalogMaker() {
         </div>
 
         {/* ------------------------------------------------------------ */}
-        {/* PAGE 1: COVER PAGE (Calibrated for strict 1-page A4 height)   */}
+        {/* PAGE 1: COVER PAGE                                           */}
         {/* ------------------------------------------------------------ */}
-        <div className="catalog-page a4-page bg-white relative flex flex-col justify-between shadow-xl mx-auto overflow-hidden print:shadow-none">
+        <div className="catalog-page a4-page bg-white relative flex flex-col justify-between shadow-2xl mx-auto overflow-hidden print:shadow-none">
           
           {/* Top Brand Header Bar */}
-          <div className="px-6 py-3 flex items-center justify-between border-b-2 border-brand-red flex-shrink-0">
-            <div className="flex items-center gap-2.5">
-              <img src="/flower.png" alt="GELCO" className="h-9 w-9 object-contain" />
+          <div className="p-8 sm:p-12 pb-4 flex items-center justify-between border-b-2 border-brand-red flex-shrink-0">
+            <div className="flex items-center gap-3">
+              <img src="/flower.png" alt="GELCO" className="h-14 w-14 object-contain" />
               <div className="flex flex-col">
-                <img src="/gelco_text.png" alt="GELCO" className="h-5 object-contain self-start" />
-                <span className="text-[9px] font-black uppercase tracking-widest text-brand-dark mt-0.5">
+                <img src="/gelco_text.png" alt="GELCO" className="h-8 object-contain self-start" />
+                <span className="text-[11px] font-black uppercase tracking-widest text-brand-dark mt-0.5">
                   Plus Electricals
                 </span>
               </div>
             </div>
 
             <div className="text-right">
-              <span className="text-[9px] font-black uppercase tracking-widest text-brand-red bg-brand-red/10 px-2.5 py-0.5 rounded-full inline-block">
+              <span className="text-[10px] font-black uppercase tracking-widest text-brand-red bg-brand-red/10 px-3 py-1 rounded-full inline-block">
                 Authorized Catalog
               </span>
-              <p className="text-[10px] font-bold text-brand-dark mt-0.5">Edition 2026 – 2027</p>
+              <p className="text-xs font-bold text-brand-dark mt-1">Edition 2026 – 2027</p>
             </div>
           </div>
 
-          {/* Cover Middle Hero Showcase Content */}
-          <div className="px-6 py-3 flex-1 flex flex-col gap-3 overflow-hidden">
+          {/* Cover Middle Hero Showcase Banner */}
+          <div className="px-8 sm:px-12 py-6 flex-1 flex flex-col justify-center overflow-hidden">
             
-            {/* Tagline Typography */}
-            <div>
-              <span className="block text-base font-light text-brand-dark leading-none">
+            {/* Tagline Typography from Reference Photo */}
+            <div className="mb-6 flex-shrink-0">
+              <span className="block text-xl sm:text-2xl font-light text-brand-dark leading-none">
                 Powerful
               </span>
-              <span className="block text-3xl font-black text-brand-red leading-tight tracking-tight">
+              <span className="block text-4xl sm:text-6xl font-black text-brand-red leading-[0.95] tracking-tight my-1">
                 Security
               </span>
-              <span className="block text-sm font-normal text-brand-dark leading-none pl-8">
+              <span className="block text-lg sm:text-2xl font-normal text-brand-dark leading-none pl-12 sm:pl-16">
                 always<span className="text-brand-red font-black">.</span>
               </span>
             </div>
 
-            {/* Showcase Artwork Image Banner — fixed height, full image visible */}
-            <div className="rounded-xl overflow-hidden border border-gray-100 shadow-sm relative bg-neutral-900 flex-shrink-0" style={{height: '200px'}}>
+            {/* Showcase Artwork Container */}
+            <div className="rounded-2xl overflow-hidden border border-gray-200 shadow-lg relative bg-neutral-900 mb-6 flex-shrink-0">
               <img
                 src="/images/hero-showcase.png"
                 alt="GELCO Industrial Showcase"
-                className="w-full h-full object-contain block"
+                className="w-full h-auto max-h-64 sm:max-h-72 object-cover block"
               />
             </div>
 
             {/* Catalog Title Block */}
-            <div className="bg-gray-50 border-l-4 border-brand-red px-4 py-3 rounded-r-xl flex-shrink-0">
-              <h2 className="text-base font-black text-brand-dark uppercase tracking-tight">
+            <div className="bg-gray-50 border-l-4 border-brand-red p-6 rounded-r-xl flex-shrink-0">
+              <h2 className="text-2xl sm:text-3xl font-black text-brand-dark uppercase tracking-tight">
                 Official Product Specification Catalog
               </h2>
-              <p className="text-[11px] text-brand-gray font-medium mt-1 leading-relaxed">
-                Complete engineering range — DOL Motor Starters, Earth Leakage Circuit Breakers (ELCB), Automatic Voltage Stabilizers, Electronic Phase Changers, and Astronomical Timers.
+              <p className="text-xs sm:text-sm text-brand-gray font-medium mt-1 leading-relaxed">
+                Complete engineering range of Three-Phase DOL Motor Starters, Earth Leakage Circuit Breakers (ELCB), Automatic Voltage Stabilizers, Electronic Phase Changers, and Astronomical Timers.
               </p>
               
-              <div className="mt-2 flex flex-wrap items-center gap-3 text-[11px] font-bold text-brand-dark">
+              <div className="mt-4 flex flex-wrap items-center gap-4 text-xs font-bold text-brand-dark">
                 <span className="flex items-center gap-1.5 text-brand-red">
-                  <CheckCircle2 className="w-3 h-3" /> {selectedProducts.length} Equipment Models
+                  <CheckCircle2 className="w-4 h-4" /> {selectedProducts.length} Equipment Models Featured
                 </span>
                 <span>•</span>
                 <span>Gandhidham, Gujarat</span>
@@ -551,9 +585,9 @@ export default function CatalogMaker() {
           </div>
 
           {/* Cover Footer Strip */}
-          <div className="bg-brand-dark text-white px-6 py-2.5 flex items-center justify-between text-xs flex-shrink-0">
+          <div className="bg-brand-dark text-white p-6 sm:p-8 flex items-center justify-between text-xs flex-shrink-0">
             <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-brand-red" />
+              <span className="w-2.5 h-2.5 rounded-full bg-brand-red" />
               <span className="font-black uppercase tracking-wider text-[11px]">GELCO PLUS ELECTRICALS</span>
               <span className="text-gray-400 text-[10px]">|</span>
               <span className="text-gray-300 text-[10px]">Gandhidham (Kutch), Gujarat</span>
