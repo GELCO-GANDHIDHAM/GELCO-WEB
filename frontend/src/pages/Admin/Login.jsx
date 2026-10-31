@@ -468,12 +468,11 @@ export default function Login() {
         </div>
 
         {/* Bottom Security Notice */}
-        <div className="w-full max-w-md mx-auto pt-6 border-t border-gray-100 flex items-center justify-between text-[11px] text-brand-gray">
+        <div className="w-full max-w-md mx-auto pt-6 border-t border-gray-100 flex items-center justify-center text-[11px] text-brand-gray">
           <div className="flex items-center gap-1.5">
             <ShieldCheck className="h-4 w-4 text-emerald-600" />
             <span className="font-semibold text-gray-700">Authorized Personnel Only</span>
           </div>
-          <span className="font-black text-gray-400">GELCO PLUS v1.2</span>
         </div>
 
       </div>

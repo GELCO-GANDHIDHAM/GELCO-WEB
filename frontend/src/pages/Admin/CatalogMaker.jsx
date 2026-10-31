@@ -190,21 +190,17 @@ export default function CatalogMaker() {
       {/* ============================================================ */}
       {/* 1. TOP HEADER & ACTION CONTROLS                              */}
       {/* ============================================================ */}
-      <div className="bg-white rounded-2xl p-6 sm:p-8 border border-brand-gray-border shadow-xs flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 print:hidden">
-        <div>
-          <div className="flex items-center gap-2 mb-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-brand-red animate-pulse" />
-            <span className="text-[11px] font-black uppercase tracking-widest text-brand-red">
+      <div className="bg-white rounded-2xl px-5 py-4 border border-brand-gray-border shadow-xs flex flex-wrap items-center justify-between gap-4 print:hidden">
+        <div className="flex items-center gap-3">
+          <FileText className="h-6 w-6 text-brand-red flex-shrink-0" />
+          <div>
+            <h1 className="text-base sm:text-lg font-black text-brand-dark uppercase tracking-tight leading-tight">
+              Catalog Maker &amp; PDF Studio
+            </h1>
+            <span className="text-[10px] font-black uppercase tracking-widest text-brand-red">
               Product Catalog Generator
             </span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-black text-brand-dark uppercase tracking-tight flex items-center gap-3">
-            <FileText className="h-7 w-7 text-brand-red" />
-            Catalog Maker & PDF Studio
-          </h1>
-          <p className="text-xs sm:text-sm text-brand-gray font-medium mt-1.5 max-w-2xl">
-            Select products and generate a multi-page PDF catalog with a cover page, individual technical product pages, and contact links.
-          </p>
         </div>
 
         {/* Action Buttons */}
@@ -219,7 +215,7 @@ export default function CatalogMaker() {
             }`}
           >
             <Eye className="w-4 h-4" />
-            <span>{previewMode ? 'Exit Full Preview' : 'Live Preview'}</span>
+            <span>{previewMode ? 'Exit Preview' : 'Live Preview'}</span>
           </button>
 
           <button
@@ -584,8 +580,8 @@ export default function CatalogMaker() {
             >
               
               {/* Product Page Header */}
-              <div className="px-6 py-2.5 flex items-center justify-between border-b border-gray-200">
-                <div className="flex items-center gap-2">
+              <div className="px-6 py-2.5 flex items-center justify-between gap-3 border-b border-gray-200 flex-wrap">
+                <div className="flex items-center gap-2 flex-shrink-0">
                   <img src="/flower.png" alt="GELCO" className="h-7 w-7 object-contain" />
                   <img src="/gelco_text.png" alt="GELCO" className="h-4.5 object-contain" />
                   <span className="text-[9px] font-black uppercase tracking-wider text-brand-dark pl-2 border-l border-gray-300">
@@ -593,12 +589,12 @@ export default function CatalogMaker() {
                   </span>
                 </div>
 
-                <div className="flex items-center gap-2">
-                  <span className="text-[9px] font-black uppercase tracking-wider bg-brand-red/10 text-brand-red px-2 py-0.5 rounded-full">
+                <div className="flex items-center gap-2 flex-shrink-0 flex-wrap">
+                  <span className="text-[9px] font-black uppercase tracking-wider bg-brand-red/10 text-brand-red px-2.5 py-1 rounded-full whitespace-nowrap">
                     {product.category?.name || 'Equipment'}
                   </span>
                   {product.model && (
-                    <span className="text-[10px] font-mono font-black bg-brand-dark text-white px-2 py-0.5 rounded">
+                    <span className="text-[9px] font-mono font-black bg-brand-dark text-white px-2.5 py-1 rounded whitespace-nowrap">
                       Model: {product.model}
                     </span>
                   )}

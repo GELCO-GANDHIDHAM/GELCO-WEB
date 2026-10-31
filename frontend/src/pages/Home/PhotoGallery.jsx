@@ -180,11 +180,6 @@ export default function PhotoGallery() {
               </>
             )}
 
-            {/* Top Right 5s Autoplay / Pause Badge */}
-            <div className="absolute top-3 right-3 sm:top-5 sm:right-5 z-20 flex items-center gap-2 bg-black/60 backdrop-blur-xs px-2.5 py-1 rounded-full text-white text-[10px] sm:text-xs font-bold border border-white/15 shadow-sm">
-              <span className="w-1.5 h-1.5 rounded-full bg-brand-red animate-pulse" />
-              <span>5s Auto</span>
-            </div>
 
             {/* Bottom Dots Indicator */}
             {totalPhotos > 1 && (
